@@ -1,0 +1,53 @@
+name: Selenium Grid Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  selenium-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium-hub:
+        image: selenium/hub:4.33.0
+        ports:
+          - 4444:4444
+
+      chrome:
+        image: selenium/node-chrome:4.33.0
+        env:
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PUBLISH_PORT: 4442
+          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+        options: >-
+          --shm-size="2g"
+
+      firefox:
+        image: selenium/node-firefox:4.33.0
+        env:
+          SE_EVENT_BUS_HOST: selenium-hub
+          SE_EVENT_BUS_PUBLISH_PORT: 4442
+          SE_EVENT_BUS_SUBSCRIBE_PORT: 4443
+        options: >-
+          --shm-size="2g"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Wait for Selenium Grid
+        run: |
+          sleep 20
+          curl http://localhost:4444/status
+
+      - name: Run tests
+        run: mvn test
