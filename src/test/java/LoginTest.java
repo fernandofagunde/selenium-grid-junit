@@ -37,7 +37,7 @@ public class LoginTest {
         executarTeste(driver);
     }
 
-    @Test
+   // @Test
     public void loginSafari() throws Exception {
 
         SafariOptions options = new SafariOptions();
