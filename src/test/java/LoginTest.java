@@ -10,9 +10,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariOptions;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 
 public class LoginTest {
 
+	@Description("Valida login com usuário válido no Chrome")
+	@Severity(SeverityLevel.CRITICAL)
+	@Owner("Fernando")
     @Test
     public void loginChrome() throws Exception {
 
@@ -25,6 +32,9 @@ public class LoginTest {
         executarTeste(driver);
     }
 
+	@Description("Valida login com usuário válido no Firefox")
+	@Severity(SeverityLevel.CRITICAL)
+	@Owner("Fernando")
     @Test
     public void loginFirefox() throws Exception {
 
